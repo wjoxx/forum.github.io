@@ -116,7 +116,6 @@ function showSection(sectionName) {
     // Загрузить данные если необходимо
     if (sectionName === 'home') {
         loadAllPosts();
-        updateStats();
     }
 }
 
@@ -184,25 +183,6 @@ function loadAllPosts(posts = forumPosts) {
             </div>
         </div>
     `).join('');
-}
-
-// Обновление статистики
-function updateStats() {
-    const totalPosts = forumPosts.length;
-    const totalComments = forumPosts.reduce((sum, post) => sum + post.comments.length, 0);
-    
-    // Считаем уникальных авторов
-    const authors = new Set();
-    forumPosts.forEach(post => {
-        if (post.author) authors.add(post.author);
-        post.comments.forEach(comment => {
-            if (comment.author) authors.add(comment.author);
-        });
-    });
-    
-    document.getElementById('total-posts').textContent = totalPosts;
-    document.getElementById('total-comments').textContent = totalComments;
-    document.getElementById('active-users').textContent = authors.size;
 }
 
 // Просмотр поста
@@ -286,7 +266,6 @@ function addComment(postId) {
     });
     
     savePosts();
-    updateStats();
     
     // Закрываем модальное окно и открываем заново для обновления
     document.querySelector('.modal').remove();
@@ -327,12 +306,6 @@ function createPost() {
     showSection('home');
 }
 
-// Фильтрация по категории
-function filterByCategory(category) {
-    const filteredPosts = forumPosts.filter(post => post.category === category);
-    loadAllPosts(filteredPosts);
-}
-
 // Поиск постов
 function setupSearch() {
     const searchInput = document.getElementById('search-posts');
@@ -359,6 +332,5 @@ function setupSearch() {
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     loadAllPosts();
-    updateStats();
     setupSearch();
 });
