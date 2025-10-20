@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форум для разработчиков</title>
+    <title>TechForum - Форум для разработчиков</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,67 +15,59 @@
         
         <div class="nav-tabs">
             <div class="nav-tab active" onclick="showSection('home')">Главная</div>
-            <div class="nav-tab" onclick="showSection('forum')">Форум</div>
             <div class="nav-tab" onclick="showSection('new-post')">Новый пост</div>
         </div>
         
         <div class="content-section active" id="home-section">
-            <h2 class="section-title">Добро пожаловать на форум!</h2>
-            <p>Присоединяйтесь к сообществу разработчиков, делитесь знаниями и находите ответы на свои вопросы.</p>
+            <div class="welcome-section">
+                <h2 class="section-title">Добро пожаловать на TechForum!</h2>
+                <p>Присоединяйтесь к сообществу разработчиков, делитесь знаниями и находите ответы на свои вопросы.</p>
+            </div>
             
-            <div class="topics-grid">
-                <div class="topic-card">
-                    <h3>Веб-разработка</h3>
-                    <p>Обсуждаем фронтенд и бэкенд технологии, фреймворки и лучшие практики.</p>
-                    <div class="topic-stats">
-                        <span>125 постов</span>
-                        <span>23 сегодня</span>
+            <div class="forum-content">
+                <div class="forum-header">
+                    <h3 class="section-title">Форум</h3>
+                    <div class="search-box">
+                        <input type="text" class="form-control" id="search-posts" placeholder="Поиск по форуму...">
                     </div>
                 </div>
                 
-                <div class="topic-card">
-                    <h3>Мобильная разработка</h3>
-                    <p>iOS, Android, кроссплатформенные решения и мобильные UI/UX.</p>
-                    <div class="topic-stats">
-                        <span>89 постов</span>
-                        <span>15 сегодня</span>
+                <div class="topics-sidebar">
+                    <div class="sidebar-section">
+                        <h4>Популярные темы</h4>
+                        <div class="topic-tags">
+                            <span class="topic-tag" onclick="filterByCategory('web')">Веб-разработка</span>
+                            <span class="topic-tag" onclick="filterByCategory('mobile')">Мобильная</span>
+                            <span class="topic-tag" onclick="filterByCategory('database')">Базы данных</span>
+                            <span class="topic-tag" onclick="filterByCategory('programming')">Программирование</span>
+                            <span class="topic-tag" onclick="filterByCategory('tools')">Инструменты</span>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h4>Статистика</h4>
+                        <div class="stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="total-posts">0</span>
+                                <span class="stat-label">Всего постов</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="total-comments">0</span>
+                                <span class="stat-label">Комментариев</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="active-users">0</span>
+                                <span class="stat-label">Активных пользователей</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="topic-card">
-                    <h3>Базы данных</h3>
-                    <p>SQL, NoSQL, оптимизация запросов и проектирование структур данных.</p>
-                    <div class="topic-stats">
-                        <span>67 постов</span>
-                        <span>8 сегодня</span>
+                <div class="posts-container">
+                    <div class="posts-list" id="all-posts">
+                        <!-- Все посты будут загружены здесь -->
                     </div>
                 </div>
-                
-                <div class="topic-card">
-                    <h3>DevOps</h3>
-                    <p>CI/CD, контейнеризация, облачные платформы и автоматизация.</p>
-                    <div class="topic-stats">
-                        <span>54 поста</span>
-                        <span>12 сегодня</span>
-                    </div>
-                </div>
-            </div>
-            
-            <h3 class="section-title">Последние обсуждения</h3>
-            <div class="posts-list" id="recent-posts">
-                <!-- Recent posts will be loaded here -->
-            </div>
-        </div>
-        
-        <div class="content-section" id="forum-section">
-            <h2 class="section-title">Форум</h2>
-            
-            <div class="form-group">
-                <input type="text" class="form-control" id="search-posts" placeholder="Поиск по форуму...">
-            </div>
-            
-            <div class="posts-list" id="all-posts">
-                <!-- All posts will be loaded here -->
             </div>
         </div>
         
@@ -94,7 +86,8 @@
                         <option value="web">Веб-разработка</option>
                         <option value="mobile">Мобильная разработка</option>
                         <option value="database">Базы данных</option>
-                        <option value="devops">DevOps</option>
+                        <option value="programming">Программирование</option>
+                        <option value="tools">Инструменты разработки</option>
                         <option value="other">Другое</option>
                     </select>
                 </div>
@@ -112,6 +105,12 @@
                 <button class="btn btn-primary" onclick="createPost()">Опубликовать пост</button>
             </div>
         </div>
+        
+        <footer>
+            <p>© 2025 TechForum - Сообщество разработчиков | Сделано с ❤️ для GitHub</p>
+        </footer>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
