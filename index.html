@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechForum - Форум для разработчиков</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TechForum</h1>
+            <h2>Сообщество разработчиков</h2>
+        </header>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showSection('home')">Главная</div>
+            <div class="nav-tab" onclick="showSection('forum')">Форум</div>
+            <div class="nav-tab" onclick="showSection('new-post')">Новый пост</div>
+        </div>
+        
+        <div class="content-section active" id="home-section">
+            <h2 class="section-title">Добро пожаловать на TechForum!</h2>
+            <p>Присоединяйтесь к сообществу разработчиков, делитесь знаниями и находите ответы на свои вопросы.</p>
+            
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <h3>Веб-разработка</h3>
+                    <p>Обсуждаем фронтенд и бэкенд технологии, фреймворки и лучшие практики.</p>
+                    <div class="topic-stats">
+                        <span>125 постов</span>
+                        <span>23 сегодня</span>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <h3>Мобильная разработка</h3>
+                    <p>iOS, Android, кроссплатформенные решения и мобильные UI/UX.</p>
+                    <div class="topic-stats">
+                        <span>89 постов</span>
+                        <span>15 сегодня</span>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <h3>Базы данных</h3>
+                    <p>SQL, NoSQL, оптимизация запросов и проектирование структур данных.</p>
+                    <div class="topic-stats">
+                        <span>67 постов</span>
+                        <span>8 сегодня</span>
+                    </div>
+                </div>
+                
+                <div class="topic-card">
+                    <h3>DevOps</h3>
+                    <p>CI/CD, контейнеризация, облачные платформы и автоматизация.</p>
+                    <div class="topic-stats">
+                        <span>54 поста</span>
+                        <span>12 сегодня</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">Последние обсуждения</h3>
+            <div class="posts-list" id="recent-posts">
+                <!-- Recent posts will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="content-section" id="forum-section">
+            <h2 class="section-title">Форум</h2>
+            
+            <div class="form-group">
+                <input type="text" class="form-control" id="search-posts" placeholder="Поиск по форуму...">
+            </div>
+            
+            <div class="posts-list" id="all-posts">
+                <!-- All posts will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="content-section" id="new-post-section">
+            <h2 class="section-title">Создать новый пост</h2>
+            
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="post-title">Заголовок</label>
+                    <input type="text" class="form-control" id="post-title" placeholder="Введите заголовок поста">
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-category">Категория</label>
+                    <select class="form-control" id="post-category">
+                        <option value="web">Веб-разработка</option>
+                        <option value="mobile">Мобильная разработка</option>
+                        <option value="database">Базы данных</option>
+                        <option value="devops">DevOps</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-content">Содержание</label>
+                    <textarea class="form-control" id="post-content" placeholder="Опишите ваш вопрос или тему для обсуждения"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-author">Ваше имя (необязательно)</label>
+                    <input type="text" class="form-control" id="post-author" placeholder="Как к вам обращаться?">
+                </div>
+                
+                <button class="btn btn-primary" onclick="createPost()">Опубликовать пост</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 TechForum - Сообщество разработчиков | Сделано с ❤️ для GitHub</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
