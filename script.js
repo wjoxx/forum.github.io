@@ -1,4 +1,3 @@
-// Данные форума с простыми темами для обсуждения
 let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 1,
@@ -62,66 +61,46 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 5,
         title: 'Как научить Telegram-бота на Python не терять задачи пользователей при перезапуске?',
-        content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния? Рассматриваю варианты с SQLite, Redis или просто файлом JSON. Что посоветуете для простого бота?',
+        content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния? ',
         author: 'Павел',
         category: 'programming',
         date: '2025-10-16T13:10:00',
-        comments: [
-            {
-                author: 'Николай',
-                content: 'Для начала используй SQLite - это легкая база данных, которая отлично подходит для небольших ботов. Создай таблицу для хранения задач пользователей с полями: user_id, task_data, created_at.',
-                date: '2025-10-16T14:25:00'
-            },
-            {
-                author: 'Татьяна',
-                content: 'Если планируешь масштабирование, лучше сразу использовать Redis. Он быстрый и отлично подходит для хранения временных данных. Для простого бота хватит и JSON файла с периодическим бэкапом.',
-                date: '2025-10-16T15:40:00'
-            }
-        ]
+        comments: []
     }
 ];
 
-// Сохранение данных в localStorage
 function savePosts() {
     localStorage.setItem('forumPosts', JSON.stringify(forumPosts));
 }
 
-// Отображение секций
 function showSection(sectionName, event) {
-    // Скрыть все секции
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
     });
     
-    // Убрать активный класс со всех вкладок
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.classList.remove('active');
     });
     
-    // Показать выбранную секцию
     const targetSection = document.getElementById(`${sectionName}-section`);
     if (targetSection) {
         targetSection.classList.add('active');
     }
     
-    // Активировать соответствующую вкладку
     if (event && event.target) {
         event.target.classList.add('active');
     } else {
-        // Если event не передан, находим вкладку по data-атрибуту
         const tab = document.querySelector(`[onclick*="${sectionName}"]`);
         if (tab) {
             tab.classList.add('active');
         }
     }
     
-    // Загрузить данные если необходимо
     if (sectionName === 'home') {
         loadAllPosts();
     }
 }
 
-// Форматирование даты
 function formatDate(dateString) {
     const date = new Date(dateString);
     const now = new Date();
@@ -138,7 +117,6 @@ function formatDate(dateString) {
     return date.toLocaleDateString('ru-RU');
 }
 
-// Получение названия категории
 function getCategoryName(category) {
     const categories = {
         'web': 'Веб-разработка',
@@ -151,7 +129,6 @@ function getCategoryName(category) {
     return categories[category] || 'Другое';
 }
 
-// Загрузка всех постов
 function loadAllPosts(posts = forumPosts) {
     const container = document.getElementById('all-posts');
     if (!container) return;
@@ -161,7 +138,7 @@ function loadAllPosts(posts = forumPosts) {
     if (sortedPosts.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
-                <i>💬</i>
+                //<i>💬</i>
                 <h3>Пока нет постов</h3>
                 <p>Будьте первым, кто создаст обсуждение на форуме!</p>
             </div>
@@ -189,12 +166,10 @@ function loadAllPosts(posts = forumPosts) {
     `).join('');
 }
 
-// Просмотр поста
 function viewPost(postId) {
     const post = forumPosts.find(p => p.id === postId);
     if (!post) return;
     
-    // Создаем модальное окно для просмотра поста
     const modal = document.createElement('div');
     modal.className = 'modal';
     
@@ -250,7 +225,6 @@ function viewPost(postId) {
     document.body.appendChild(modal);
 }
 
-// Добавление комментария
 function addComment(postId) {
     const contentInput = document.getElementById('comment-content');
     const authorInput = document.getElementById('comment-author');
@@ -281,7 +255,6 @@ function addComment(postId) {
     
     savePosts();
     
-    // Закрываем модальное окно и открываем заново для обновления
     const modal = document.querySelector('.modal');
     if (modal) {
         modal.remove();
@@ -289,7 +262,6 @@ function addComment(postId) {
     viewPost(postId);
 }
 
-// Создание нового поста
 function createPost() {
     const titleInput = document.getElementById('post-title');
     const contentInput = document.getElementById('post-content');
@@ -326,7 +298,6 @@ function createPost() {
     forumPosts.push(newPost);
     savePosts();
     
-    // Очистка формы
     titleInput.value = '';
     contentInput.value = '';
     if (authorInput) {
@@ -337,7 +308,6 @@ function createPost() {
     showSection('home');
 }
 
-// Поиск постов
 function setupSearch() {
     const searchInput = document.getElementById('search-posts');
     if (searchInput) {
@@ -360,11 +330,9 @@ function setupSearch() {
     }
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     loadAllPosts();
     setupSearch();
     
-    // Активируем домашнюю секцию по умолчанию
     showSection('home');
 });
