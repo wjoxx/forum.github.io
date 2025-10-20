@@ -1,3 +1,4 @@
+// Данные форума с простыми темами для обсуждения
 let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 1,
@@ -8,12 +9,12 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         date: '2025-10-20T10:30:00',
         comments: [
             {
-                author: 'Олег',
+                author: 'Опытный',
                 content: 'Начни с Python - у него простой синтаксис и много возможностей.',
                 date: '2025-10-20T11:45:00'
             },
             {
-                author: 'Елена',
+                author: 'Разработчик',
                 content: 'Если интересует веб - тогда JavaScript. Для общего развития - Python.',
                 date: '2025-10-20T12:20:00'
             }
@@ -26,7 +27,13 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         author: 'Верстальщик',
         category: 'web',
         date: '2025-10-19T14:15:00',
-        comments: []
+        comments: [
+            {
+                author: 'Дизайнер',
+                content: 'Используй media queries и относительные единицы (%, rem).',
+                date: '2025-10-19T15:30:00'
+            }
+        ]
     },
     {
         id: 3,
@@ -41,12 +48,12 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         id: 4,
         title: 'SQL или NoSQL для нового проекта?',
         content: 'Начинаю новый проект. Не могу определиться с базой данных. Что посоветуете?',
-        author: 'Евгений',
+        author: 'Архитектор',
         category: 'database',
         date: '2025-10-17T16:20:00',
         comments: [
             {
-                author: 'Дмитрий',
+                author: 'DBA',
                 content: 'Зависит от структуры данных. Если данные структурированы - SQL, если нет - NoSQL.',
                 date: '2025-10-17T17:05:00'
             }
@@ -55,19 +62,19 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 5,
         title: 'Как научить Telegram-бота на Python не терять задачи пользователей при перезапуске?',
-        content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния? ',
+        content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния? Рассматриваю варианты с SQLite, Redis или просто файлом JSON. Что посоветуете для простого бота?',
         author: 'Разработчик ботов',
         category: 'programming',
         date: '2025-10-16T13:10:00',
         comments: [
             {
-                author: 'Михаил',
+                author: 'PythonGuru',
                 content: 'Для начала используй SQLite - это легкая база данных, которая отлично подходит для небольших ботов. Создай таблицу для хранения задач пользователей с полями: user_id, task_data, created_at.',
                 date: '2025-10-16T14:25:00'
             },
             {
-                author: 'Дарья',
-                content: []
+                author: 'BackendDev',
+                content: 'Если планируешь масштабирование, лучше сразу использовать Redis. Он быстрый и отлично подходит для хранения временных данных. Для простого бота хватит и JSON файла с периодическим бэкапом.',
                 date: '2025-10-16T15:40:00'
             }
         ]
