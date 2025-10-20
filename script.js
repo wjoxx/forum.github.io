@@ -1,4 +1,3 @@
-// Данные форума с простыми темами для обсуждения
 let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 1,
@@ -42,7 +41,7 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         id: 4,
         title: 'SQL или NoSQL для нового проекта?',
         content: 'Начинаю новый проект. Не могу определиться с базой данных. Что посоветуете?',
-        author: 'Архитектор',
+        author: 'Евгений',
         category: 'database',
         date: '2025-10-17T16:20:00',
         comments: [
@@ -68,7 +67,7 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
             },
             {
                 author: 'Дарья',
-                content: 'Если планируешь масштабирование, лучше сразу использовать Redis. Он быстрый и отлично подходит для хранения временных данных. Для простого бота хватит и JSON файла с периодическим бэкапом.',
+                content: []
                 date: '2025-10-16T15:40:00'
             }
         ]
