@@ -1,19 +1,20 @@
+// Данные форума с простыми темами для обсуждения
 let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 1,
         title: 'Какой язык программирования учить первым?',
         content: 'Хочу начать изучать программирование. Посоветуйте, с какого языка лучше начать? Python, JavaScript или может быть Java?',
-        author: 'Новичок',
+        author: 'Алексей',
         category: 'programming',
         date: '2025-10-20T10:30:00',
         comments: [
             {
-                author: 'Опытный',
+                author: 'Мария',
                 content: 'Начни с Python - у него простой синтаксис и много возможностей.',
                 date: '2025-10-20T11:45:00'
             },
             {
-                author: 'Разработчик',
+                author: 'Дмитрий',
                 content: 'Если интересует веб - тогда JavaScript. Для общего развития - Python.',
                 date: '2025-10-20T12:20:00'
             }
@@ -23,12 +24,12 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         id: 2,
         title: 'Проблема с версткой на мобильных',
         content: 'Сайт нормально выглядит на компьютере, но на телефоне все едет. Как правильно делать адаптивную верстку?',
-        author: 'Верстальщик',
+        author: 'Сергей',
         category: 'web',
         date: '2025-10-19T14:15:00',
         comments: [
             {
-                author: 'Дизайнер',
+                author: 'Елена',
                 content: 'Используй media queries и относительные единицы (%, rem).',
                 date: '2025-10-19T15:30:00'
             }
@@ -38,7 +39,7 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         id: 3,
         title: 'Какая IDE лучше для Java?',
         content: 'Работаю с Java. Intellij IDEA или Eclipse? Что выбрать и почему?',
-        author: 'Java-разработчик',
+        author: 'Андрей',
         category: 'tools',
         date: '2025-10-18T09:45:00',
         comments: []
@@ -47,12 +48,12 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         id: 4,
         title: 'SQL или NoSQL для нового проекта?',
         content: 'Начинаю новый проект. Не могу определиться с базой данных. Что посоветуете?',
-        author: 'Архитектор',
+        author: 'Иван',
         category: 'database',
         date: '2025-10-17T16:20:00',
         comments: [
             {
-                author: 'DBA',
+                author: 'Ольга',
                 content: 'Зависит от структуры данных. Если данные структурированы - SQL, если нет - NoSQL.',
                 date: '2025-10-17T17:05:00'
             }
@@ -62,17 +63,17 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
         id: 5,
         title: 'Как научить Telegram-бота на Python не терять задачи пользователей при перезапуске?',
         content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния? Рассматриваю варианты с SQLite, Redis или просто файлом JSON. Что посоветуете для простого бота?',
-        author: 'Разработчик ботов',
+        author: 'Павел',
         category: 'programming',
         date: '2025-10-16T13:10:00',
         comments: [
             {
-                author: 'PythonGuru',
+                author: 'Николай',
                 content: 'Для начала используй SQLite - это легкая база данных, которая отлично подходит для небольших ботов. Создай таблицу для хранения задач пользователей с полями: user_id, task_data, created_at.',
                 date: '2025-10-16T14:25:00'
             },
             {
-                author: 'BackendDev',
+                author: 'Татьяна',
                 content: 'Если планируешь масштабирование, лучше сразу использовать Redis. Он быстрый и отлично подходит для хранения временных данных. Для простого бота хватит и JSON файла с периодическим бэкапом.',
                 date: '2025-10-16T15:40:00'
             }
@@ -86,7 +87,7 @@ function savePosts() {
 }
 
 // Отображение секций
-function showSection(sectionName) {
+function showSection(sectionName, event) {
     // Скрыть все секции
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
@@ -98,10 +99,21 @@ function showSection(sectionName) {
     });
     
     // Показать выбранную секцию
-    document.getElementById(`${sectionName}-section`).classList.add('active');
+    const targetSection = document.getElementById(`${sectionName}-section`);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
     
     // Активировать соответствующую вкладку
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    } else {
+        // Если event не передан, находим вкладку по data-атрибуту
+        const tab = document.querySelector(`[onclick*="${sectionName}"]`);
+        if (tab) {
+            tab.classList.add('active');
+        }
+    }
     
     // Загрузить данные если необходимо
     if (sectionName === 'home') {
@@ -142,6 +154,8 @@ function getCategoryName(category) {
 // Загрузка всех постов
 function loadAllPosts(posts = forumPosts) {
     const container = document.getElementById('all-posts');
+    if (!container) return;
+    
     const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
     
     if (sortedPosts.length === 0) {
@@ -158,7 +172,7 @@ function loadAllPosts(posts = forumPosts) {
     container.innerHTML = sortedPosts.map(post => `
         <div class="post-card">
             <div class="post-header">
-                <span class="post-author">${post.author || 'Аноним'}</span>
+                <span class="post-author">${post.author}</span>
                 <span class="post-date">${formatDate(post.date)}</span>
             </div>
             <h3 class="post-title">${post.title}</h3>
@@ -193,7 +207,7 @@ function viewPost(postId) {
             
             <div class="post-card">
                 <div class="post-header">
-                    <span class="post-author">${post.author || 'Аноним'}</span>
+                    <span class="post-author">${post.author}</span>
                     <span class="post-date">${formatDate(post.date)}</span>
                 </div>
                 <div class="post-content">${post.content}</div>
@@ -212,10 +226,10 @@ function viewPost(postId) {
                 ` : post.comments.map(comment => `
                     <div class="comment-card">
                         <div class="comment-header">
-                            <span class="comment-author">${comment.author || 'Аноним'}</span>
+                            <span class="comment-author">${comment.author}</span>
                             <span class="comment-date">${formatDate(comment.date)}</span>
                         </div>
-                        <div>${comment.content}</div>
+                        <div class="comment-content">${comment.content}</div>
                     </div>
                 `).join('')}
                 
@@ -225,7 +239,7 @@ function viewPost(postId) {
                         <textarea class="form-control" id="comment-content" placeholder="Ваш комментарий..."></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="comment-author" placeholder="Ваше имя (необязательно)">
+                        <input type="text" class="form-control" id="comment-author" placeholder="Ваше имя">
                     </div>
                     <button class="btn btn-primary" onclick="addComment(${post.id})">Отправить комментарий</button>
                 </div>
@@ -238,11 +252,21 @@ function viewPost(postId) {
 
 // Добавление комментария
 function addComment(postId) {
-    const content = document.getElementById('comment-content').value.trim();
-    const author = document.getElementById('comment-author').value.trim();
+    const contentInput = document.getElementById('comment-content');
+    const authorInput = document.getElementById('comment-author');
+    
+    if (!contentInput || !authorInput) return;
+    
+    const content = contentInput.value.trim();
+    const author = authorInput.value.trim();
     
     if (!content) {
         alert('Пожалуйста, введите текст комментария');
+        return;
+    }
+
+    if (!author) {
+        alert('Пожалуйста, введите ваше имя');
         return;
     }
     
@@ -250,7 +274,7 @@ function addComment(postId) {
     if (!post) return;
     
     post.comments.push({
-        author: author || 'Аноним',
+        author: author,
         content: content,
         date: new Date().toISOString()
     });
@@ -258,19 +282,34 @@ function addComment(postId) {
     savePosts();
     
     // Закрываем модальное окно и открываем заново для обновления
-    document.querySelector('.modal').remove();
+    const modal = document.querySelector('.modal');
+    if (modal) {
+        modal.remove();
+    }
     viewPost(postId);
 }
 
 // Создание нового поста
 function createPost() {
-    const title = document.getElementById('post-title').value.trim();
-    const content = document.getElementById('post-content').value.trim();
-    const author = document.getElementById('post-author').value.trim();
-    const category = document.getElementById('post-category').value;
+    const titleInput = document.getElementById('post-title');
+    const contentInput = document.getElementById('post-content');
+    const authorInput = document.getElementById('post-author');
+    const categoryInput = document.getElementById('post-category');
+    
+    if (!titleInput || !contentInput || !categoryInput) return;
+    
+    const title = titleInput.value.trim();
+    const content = contentInput.value.trim();
+    const author = authorInput ? authorInput.value.trim() : '';
+    const category = categoryInput.value;
     
     if (!title || !content) {
         alert('Пожалуйста, заполните заголовок и содержание поста');
+        return;
+    }
+
+    if (!author) {
+        alert('Пожалуйста, введите ваше имя');
         return;
     }
     
@@ -278,7 +317,7 @@ function createPost() {
         id: forumPosts.length > 0 ? Math.max(...forumPosts.map(p => p.id)) + 1 : 1,
         title: title,
         content: content,
-        author: author || 'Аноним',
+        author: author,
         category: category,
         date: new Date().toISOString(),
         comments: []
@@ -288,9 +327,11 @@ function createPost() {
     savePosts();
     
     // Очистка формы
-    document.getElementById('post-title').value = '';
-    document.getElementById('post-content').value = '';
-    document.getElementById('post-author').value = '';
+    titleInput.value = '';
+    contentInput.value = '';
+    if (authorInput) {
+        authorInput.value = '';
+    }
     
     alert('Пост успешно опубликован!');
     showSection('home');
@@ -323,4 +364,7 @@ function setupSearch() {
 document.addEventListener('DOMContentLoaded', function() {
     loadAllPosts();
     setupSearch();
+    
+    // Активируем домашнюю секцию по умолчанию
+    showSection('home');
 });
