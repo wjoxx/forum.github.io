@@ -1,47 +1,91 @@
-// Данные форума (в реальном приложении будут храниться на сервере)
+// Данные форума с простыми темами для обсуждения
 let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 1,
-        title: 'React vs Vue в 2025 году',
-        content: 'Какой фреймворк выбрать для нового проекта? Какие преимущества и недостатки у каждого?',
-        author: 'Алексей',
-        category: 'web',
-        date: '2025-10-19T14:30:00',
+        title: 'Какой язык программирования учить первым?',
+        content: 'Хочу начать изучать программирование. Посоветуйте, с какого языка лучше начать? Python, JavaScript или может быть Java?',
+        author: 'Новичок',
+        category: 'programming',
+        date: '2025-10-20T10:30:00',
         comments: [
             {
-                author: 'Мария',
-                content: 'Я предпочитаю Vue из-за его простоты и отличной документации.',
-                date: '2025-10-19T15:45:00'
+                author: 'Опытный',
+                content: 'Начни с Python - у него простой синтаксис и много возможностей.',
+                date: '2025-10-20T11:45:00'
             },
             {
-                author: 'Дмитрий',
-                content: 'React имеет больше вакансий на рынке, что важно для карьеры.',
-                date: '2025-10-19T16:20:00'
+                author: 'Разработчик',
+                content: 'Если интересует веб - тогда JavaScript. Для общего развития - Python.',
+                date: '2025-10-20T12:20:00'
             }
         ]
     },
     {
         id: 2,
-        title: 'Лучшие практики работы с Docker',
-        content: 'Поделитесь советами по оптимизации Dockerfile и организации контейнеров.',
-        author: 'Ольга',
-        category: 'devops',
-        date: '2025-10-18T11:15:00',
+        title: 'Проблема с версткой на мобильных',
+        content: 'Сайт нормально выглядит на компьютере, но на телефоне все едет. Как правильно делать адаптивную верстку?',
+        author: 'Верстальщик',
+        category: 'web',
+        date: '2025-10-19T14:15:00',
         comments: [
             {
-                author: 'Иван',
-                content: 'Используйте многоступенчатые сборки для уменьшения размера образов.',
-                date: '2025-10-18T12:30:00'
+                author: 'Дизайнер',
+                content: 'Используй media queries и относительные единицы (%, rem).',
+                date: '2025-10-19T15:30:00'
             }
         ]
     },
     {
         id: 3,
-        title: 'Оптимизация SQL запросов',
-        content: 'Какие методы оптимизации SQL запросов самые эффективные для больших баз данных?',
-        author: 'Сергей',
+        title: 'Какая IDE лучше для Java?',
+        content: 'Работаю с Java. Intellij IDEA или Eclipse? Что выбрать и почему?',
+        author: 'Java-разработчик',
+        category: 'tools',
+        date: '2025-10-18T09:45:00',
+        comments: []
+    },
+    {
+        id: 4,
+        title: 'SQL или NoSQL для нового проекта?',
+        content: 'Начинаю новый проект. Не могу определиться с базой данных. Что посоветуете?',
+        author: 'Архитектор',
         category: 'database',
-        date: '2025-10-17T16:05:00',
+        date: '2025-10-17T16:20:00',
+        comments: [
+            {
+                author: 'DBA',
+                content: 'Зависит от структуры данных. Если данные структурированы - SQL, если нет - NoSQL.',
+                date: '2025-10-17T17:05:00'
+            }
+        ]
+    },
+    {
+        id: 5,
+        title: 'Как научить Telegram-бота на Python не терять задачи пользователей при перезапуске?',
+        content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния? Рассматриваю варианты с SQLite, Redis или просто файлом JSON. Что посоветуете для простого бота?',
+        author: 'BotDeveloper',
+        category: 'programming',
+        date: '2025-10-16T13:10:00',
+        comments: [
+            {
+                author: 'PythonGuru',
+                content: 'Для начала используй SQLite - это легкая база данных, которая отлично подходит для небольших ботов. Создай таблицу для хранения задач пользователей с полями: user_id, task_data, created_at.',
+                date: '2025-10-16T14:25:00'
+            },
+            {
+                author: 'BackendDev',
+                content: 'Если планируешь масштабирование, лучше сразу использовать Redis. Он быстрый и отлично подходит для хранения временных данных. Для простого бота хватит и JSON файла с периодическим бэкапом.',
+                date: '2025-10-16T15:40:00'
+            }
+        ]
+    },
+    {
+        id: 6,
+        title: 'Какой фреймворк выбрать для веб-приложения?',
+        content: 'Планирую создать веб-приложение средней сложности. Выбираю между Django, Flask и FastAPI. Какие плюсы и минусы у каждого?',
+        author: 'WebDeveloper',
+        category: 'web',
+        date: '2025-10-15T11:30:00',
         comments: []
     }
 ];
@@ -71,9 +115,8 @@ function showSection(sectionName) {
     
     // Загрузить данные если необходимо
     if (sectionName === 'home') {
-        loadRecentPosts();
-    } else if (sectionName === 'forum') {
         loadAllPosts();
+        updateStats();
     }
 }
 
@@ -94,43 +137,23 @@ function formatDate(dateString) {
     return date.toLocaleDateString('ru-RU');
 }
 
-// Загрузка последних постов
-function loadRecentPosts() {
-    const container = document.getElementById('recent-posts');
-    const recentPosts = [...forumPosts]
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 5);
-    
-    if (recentPosts.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <i>💬</i>
-                <h3>Пока нет постов</h3>
-                <p>Будьте первым, кто создаст обсуждение на форуме!</p>
-            </div>
-        `;
-        return;
-    }
-    
-    container.innerHTML = recentPosts.map(post => `
-        <div class="post-card">
-            <div class="post-header">
-                <span class="post-author">${post.author || 'Аноним'}</span>
-                <span class="post-date">${formatDate(post.date)}</span>
-            </div>
-            <h3 class="post-title">${post.title}</h3>
-            <div class="post-content">${post.content}</div>
-            <div class="post-actions">
-                <button class="btn btn-outline" onclick="viewPost(${post.id})">Комментарии (${post.comments.length})</button>
-            </div>
-        </div>
-    `).join('');
+// Получение названия категории
+function getCategoryName(category) {
+    const categories = {
+        'web': 'Веб-разработка',
+        'mobile': 'Мобильная разработка',
+        'database': 'Базы данных',
+        'programming': 'Программирование',
+        'tools': 'Инструменты',
+        'other': 'Другое'
+    };
+    return categories[category] || 'Другое';
 }
 
 // Загрузка всех постов
-function loadAllPosts() {
+function loadAllPosts(posts = forumPosts) {
     const container = document.getElementById('all-posts');
-    const sortedPosts = [...forumPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+    const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
     
     if (sortedPosts.length === 0) {
         container.innerHTML = `
@@ -151,11 +174,35 @@ function loadAllPosts() {
             </div>
             <h3 class="post-title">${post.title}</h3>
             <div class="post-content">${post.content}</div>
-            <div class="post-actions">
-                <button class="btn btn-outline" onclick="viewPost(${post.id})">Комментарии (${post.comments.length})</button>
+            <div class="post-meta">
+                <span class="post-category">${getCategoryName(post.category)}</span>
+                <div class="post-actions">
+                    <button class="btn btn-outline" onclick="viewPost(${post.id})">
+                        💬 Комментарии (${post.comments.length})
+                    </button>
+                </div>
             </div>
         </div>
     `).join('');
+}
+
+// Обновление статистики
+function updateStats() {
+    const totalPosts = forumPosts.length;
+    const totalComments = forumPosts.reduce((sum, post) => sum + post.comments.length, 0);
+    
+    // Считаем уникальных авторов
+    const authors = new Set();
+    forumPosts.forEach(post => {
+        if (post.author) authors.add(post.author);
+        post.comments.forEach(comment => {
+            if (comment.author) authors.add(comment.author);
+        });
+    });
+    
+    document.getElementById('total-posts').textContent = totalPosts;
+    document.getElementById('total-comments').textContent = totalComments;
+    document.getElementById('active-users').textContent = authors.size;
 }
 
 // Просмотр поста
@@ -180,6 +227,9 @@ function viewPost(postId) {
                     <span class="post-date">${formatDate(post.date)}</span>
                 </div>
                 <div class="post-content">${post.content}</div>
+                <div class="post-meta">
+                    <span class="post-category">${getCategoryName(post.category)}</span>
+                </div>
             </div>
             
             <div class="comments-section">
@@ -236,6 +286,7 @@ function addComment(postId) {
     });
     
     savePosts();
+    updateStats();
     
     // Закрываем модальное окно и открываем заново для обновления
     document.querySelector('.modal').remove();
@@ -276,48 +327,38 @@ function createPost() {
     showSection('home');
 }
 
+// Фильтрация по категории
+function filterByCategory(category) {
+    const filteredPosts = forumPosts.filter(post => post.category === category);
+    loadAllPosts(filteredPosts);
+}
+
 // Поиск постов
 function setupSearch() {
     const searchInput = document.getElementById('search-posts');
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
+            if (searchTerm === '') {
+                loadAllPosts();
+                return;
+            }
+            
             const filteredPosts = forumPosts.filter(post => 
                 post.title.toLowerCase().includes(searchTerm) || 
                 post.content.toLowerCase().includes(searchTerm) ||
-                post.author.toLowerCase().includes(searchTerm)
+                post.author.toLowerCase().includes(searchTerm) ||
+                getCategoryName(post.category).toLowerCase().includes(searchTerm)
             );
             
-            const container = document.getElementById('all-posts');
-            if (filteredPosts.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i>🔍</i>
-                        <h3>Ничего не найдено</h3>
-                        <p>Попробуйте изменить поисковый запрос</p>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = filteredPosts.map(post => `
-                    <div class="post-card">
-                        <div class="post-header">
-                            <span class="post-author">${post.author || 'Аноним'}</span>
-                            <span class="post-date">${formatDate(post.date)}</span>
-                        </div>
-                        <h3 class="post-title">${post.title}</h3>
-                        <div class="post-content">${post.content}</div>
-                        <div class="post-actions">
-                            <button class="btn btn-outline" onclick="viewPost(${post.id})">Комментарии (${post.comments.length})</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
+            loadAllPosts(filteredPosts);
         });
     }
 }
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    loadRecentPosts();
+    loadAllPosts();
+    updateStats();
     setupSearch();
 });
