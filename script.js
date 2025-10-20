@@ -62,8 +62,8 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
     {
         id: 5,
         title: 'Как научить Telegram-бота на Python не терять задачи пользователей при перезапуске?',
-        content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния? Рассматриваю варианты с SQLite, Redis или просто файлом JSON. Что посоветуете для простого бота?',
-        author: 'BotDeveloper',
+        content: 'Разрабатываю Telegram-бота на Python с использованием python-telegram-bot. Проблема в том, что при перезапуске бота все задачи пользователей сбрасываются. Как правильно организовать сохранение состояния?',
+        author: 'Разработчик ботов',
         category: 'programming',
         date: '2025-10-16T13:10:00',
         comments: [
@@ -78,15 +78,6 @@ let forumPosts = JSON.parse(localStorage.getItem('forumPosts')) || [
                 date: '2025-10-16T15:40:00'
             }
         ]
-    },
-    {
-        id: 6,
-        title: 'Какой фреймворк выбрать для веб-приложения?',
-        content: 'Планирую создать веб-приложение средней сложности. Выбираю между Django, Flask и FastAPI. Какие плюсы и минусы у каждого?',
-        author: 'WebDeveloper',
-        category: 'web',
-        date: '2025-10-15T11:30:00',
-        comments: []
     }
 ];
 
