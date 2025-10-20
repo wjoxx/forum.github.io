@@ -138,7 +138,6 @@ function loadAllPosts(posts = forumPosts) {
     if (sortedPosts.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
-                //<i>💬</i>
                 <h3>Пока нет постов</h3>
                 <p>Будьте первым, кто создаст обсуждение на форуме!</p>
             </div>
@@ -158,7 +157,7 @@ function loadAllPosts(posts = forumPosts) {
                 <span class="post-category">${getCategoryName(post.category)}</span>
                 <div class="post-actions">
                     <button class="btn btn-outline" onclick="viewPost(${post.id})">
-                        💬 Комментарии (${post.comments.length})
+                         Комментарии (${post.comments.length})
                     </button>
                 </div>
             </div>
