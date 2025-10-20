@@ -90,7 +90,7 @@ h2 {
     font-size: 1.6rem;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--border-color); 
+    border-bottom: 2px solid var(--border-color);
 }
 
 .welcome-section {
@@ -114,10 +114,13 @@ h2 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .search-box {
     width: 300px;
+    min-width: 250px;
 }
 
 .posts-container {
@@ -149,6 +152,8 @@ h2 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .post-author {
@@ -182,6 +187,8 @@ h2 {
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .post-category {
@@ -281,7 +288,6 @@ footer {
 
 .empty-state i {
     font-size: 4rem;
-    color: var(--border-color);
     margin-bottom: 20px;
     opacity: 0.5;
 }
@@ -297,7 +303,7 @@ footer {
     opacity: 0.8;
 }
 
-/* Упрощенное модальное окно */
+/* Модальное окно */
 .modal {
     position: fixed;
     top: 0;
@@ -358,7 +364,7 @@ footer {
     background-color: var(--light-blue);
 }
 
-/* Упрощенный пост в модальном окне */
+/* Стили для модального окна */
 .modal .post-card {
     background-color: var(--light-blue);
     border: 1px solid var(--border-color);
@@ -382,7 +388,6 @@ footer {
     color: var(--text-color);
 }
 
-/* Упрощенные комментарии */
 .modal .comments-section {
     margin-top: 25px;
 }
@@ -407,14 +412,16 @@ footer {
 }
 
 .modal .comment-author {
+    font-weight: bold;
+    color: var(--primary-blue);
     font-size: 0.9rem;
 }
 
 .modal .comment-date {
+    color: var(--dark-blue);
     font-size: 0.8rem;
 }
 
-/* Упрощенная форма комментария */
 .modal .form-container {
     background-color: var(--white);
     border: 1px solid var(--border-color);
@@ -449,4 +456,30 @@ footer {
     width: 100%;
     padding: 12px;
     font-size: 1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .forum-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        width: 100%;
+    }
+    
+    .nav-tabs {
+        flex-direction: column;
+    }
+    
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .modal-content {
+        padding: 15px;
+        margin: 10px;
+    }
 }
