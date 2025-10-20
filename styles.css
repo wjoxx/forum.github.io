@@ -90,7 +90,7 @@ h2 {
     font-size: 1.6rem;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color); 
 }
 
 .welcome-section {
